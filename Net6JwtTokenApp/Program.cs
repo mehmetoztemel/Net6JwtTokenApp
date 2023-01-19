@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Net6JwtTokenApp.Context;
+using Net6JwtTokenApp.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,10 +28,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(secretKey),
             ClockSkew = TimeSpan.Zero
-        };
+        };  
 
     });
 #endregion
+
+builder.Services.AddDbContext<RefreshTokenDbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
+});
+
+
+builder.Services.AddScoped<ITokenService, TokenService>();
+
 
 
 
@@ -41,7 +53,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+
+#region Database Auto Migrate
+using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetService<RefreshTokenDbContext>();
+    context.Database.Migrate();
+}
+#endregion
 
 app.MapControllers();
 
