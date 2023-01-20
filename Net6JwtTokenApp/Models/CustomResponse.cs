@@ -9,7 +9,7 @@ namespace Net6JwtTokenApp.Models
         [JsonIgnore]
         public int StatusCode { get; set; }
         public bool IsSuccess { get; set; }
-        public List<String> Errors { get; set; }
+        public List<string> Errors { get; set; }
         public static CustomResponse Success(int statusCode, object data)
         {
             return new CustomResponse { Data = data, StatusCode = statusCode, IsSuccess = true };

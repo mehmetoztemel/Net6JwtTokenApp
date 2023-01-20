@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Net6JwtTokenApp.Context;
+using Net6JwtTokenApp.Middlewares;
 using Net6JwtTokenApp.Services;
 using System.Text;
 
@@ -53,6 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCustomExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 
