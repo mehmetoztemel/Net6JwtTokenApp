@@ -16,9 +16,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\01-Token\" />
-    <Folder Include="Services\02-User\" />
-  </ItemGroup>
-
 </Project>

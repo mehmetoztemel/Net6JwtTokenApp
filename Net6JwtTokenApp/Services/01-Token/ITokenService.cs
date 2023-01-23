@@ -7,7 +7,7 @@ namespace Net6JwtTokenApp.Services
         CustomResponse CreateToken(TokenRequest tokenRequest);
         string CreateRefreshToken();
 
-        CustomResponse RefreshTokenUpdate(string refreshToken);
+        CustomResponse RefreshTokenUpdate(RefreshTokenRequest refreshTokenRequest);
 
     }
 }

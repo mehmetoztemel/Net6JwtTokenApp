@@ -50,7 +50,7 @@ namespace Net6JwtTokenApp.Services
                 tokenResponse.RefreshToken = CreateRefreshToken();
 
                 user.RefreshToken = tokenResponse.RefreshToken;
-                user.RefreshTokenEndDate = tokenResponse.Expiration.AddMinutes(3);
+                user.RefreshTokenEndDate = tokenResponse.Expiration.AddMinutes(10);
                 _context.SaveChanges();
 
                 return CustomResponse.Success(200, tokenResponse);
@@ -72,9 +72,9 @@ namespace Net6JwtTokenApp.Services
             }
         }
 
-        public CustomResponse RefreshTokenUpdate(string refreshToken)
+        public CustomResponse RefreshTokenUpdate(RefreshTokenRequest refreshTokenRequest)
         {
-            var user = _context.Users.FirstOrDefault(x => x.RefreshToken == refreshToken);
+            var user = _context.Users.FirstOrDefault(x => x.RefreshToken == refreshTokenRequest.RefreshToken);
 
             if (user != null && user.RefreshTokenEndDate > DateTime.Now) {
 

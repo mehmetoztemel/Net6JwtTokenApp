@@ -21,11 +21,11 @@ namespace Net6JwtTokenApp.Controllers
         }
 
         [Route("refreshtoken")]
-        [HttpGet]
-        public IActionResult RefreshToken([FromForm] string refreshToken)
+        [HttpPost]
+        public IActionResult RefreshToken(RefreshTokenRequest refreshTokenRequest)
         {
 
-            return CustomResult(_tokenService.RefreshTokenUpdate(refreshToken));
+            return CustomResult(_tokenService.RefreshTokenUpdate(refreshTokenRequest));
 
         }
     }
